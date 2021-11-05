@@ -1,0 +1,65 @@
+<form [formGroup]="recipeForm" (ngSubmit)="onSaveRecipe()" style="margin-top:5rem">
+  <fieldset>
+    <legend>Create new recipe</legend>
+    <div class="form-group">
+      <label for="name" class="form-label mt-4">Name</label>
+      <input type="text" class="form-control" id="name" aria-describedby="nameHelp"
+      placeholder="Enter a recipe name" formControlName="name">
+      <div *ngIf="name?.invalid && (name?.dirty || name?.touched)"
+      class="alert alert-danger">
+      <small class="text-danger"
+        *ngIf="name?.hasError('required')">
+        This field is required.
+    </small>
+    <small *ngIf="name?.hasError('minlength')">
+      Name must be at least 3 characters long.
+    </small>
+      </div>
+
+
+    </div>
+
+    <div class="form-group">
+      <label for="category" class="form-label mt-4">Category</label>
+      <select class="form-select" id="category" formControlName="category">
+        <option>Bread</option>
+        <option>Dessert</option>
+        <option>Cakes</option>
+        <option>Juice</option>
+        <option>Main dish</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="ingredients" class="form-label mt-4">Ingredients</label>
+      <textarea class="form-control" id="ingredients" rows="3" formControlName="ingredients"></textarea>
+      <div *ngIf="ingredients?.invalid && (ingredients?.dirty || ingredients?.touched)"
+      class="alert alert-danger">
+      <small class="text-danger"
+        *ngIf="ingredients?.hasError('required')">
+        This field is required.
+    </small>
+    <small *ngIf="ingredients?.hasError('minlength')">
+      Ingredients must be at least 10 characters long.
+    </small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="preparation" class="form-label mt-4">Preparation</label>
+      <textarea class="form-control" id="preparation" rows="3" formControlName="preparation"></textarea>
+      <div *ngIf="preparation?.invalid && (preparation?.dirty || preparation?.touched)"
+      class="alert alert-danger">
+      <small class="text-danger"
+        *ngIf="preparation?.hasError('required')">
+        This field is required.
+    </small>
+    <small *ngIf="preparation?.hasError('minlength')">
+      Preparation must be at least 10 characters long.
+    </small>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="recipeForm.invalid">Submit</button>
+  </fieldset>
+</form>

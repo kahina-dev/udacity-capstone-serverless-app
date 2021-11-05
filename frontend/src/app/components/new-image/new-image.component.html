@@ -1,0 +1,9 @@
+<div class="form-group" style="margin-top:5rem">
+  <h4>Upload a recipe photo</h4>
+  <label for="formFile" class="form-label mt-4">Photo: </label>
+  <input class="form-control" type="file" id="formFile" accept="image/*"
+  placeholder="Image to upload" (change)="onFileSelected($event)">
+  <button class="btn btn-primary" style="margin-top:1.5rem"
+      (click)="onUplodFile()"> Save
+</button>
+</div>
