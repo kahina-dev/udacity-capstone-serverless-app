@@ -39,23 +39,27 @@ export class AuthService {
   public parseAccessToken() {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
-        console.log('id token: ', authResult.idToken)
+        console.log('Setting token')
         this.setSession(authResult);
+        this.getUser(authResult.accessToken);
       } else if (err) {
         console.log(err);
-        //alert(`Error: ${err.error}. Check the console for further details.`);
       }
     });
   }
 
-  public getUser(){
-    this.auth0.client.userInfo(this.accessToken, (err, user)=>{
+  public getUser(accessToken: string){
+    console.log('Setting user info for accessToken '+accessToken);
+    if (accessToken){
+    this.auth0.client.userInfo(accessToken, (err, user)=>{
    if (user){
      this.user=user.name;
+     console.log("user is"+user.user_id);
    }else if (err) {
     console.log(err);
    }
     });
+  }
   }
 
   setSession(authResult:any) {

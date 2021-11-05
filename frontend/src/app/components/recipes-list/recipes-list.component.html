@@ -9,7 +9,7 @@
 <div class="card border-primary mb-3" style="max-width: 20rem;" >
   <div class="card-header">Recipe n° {{i+1}}</div>
   <div class="card-body">
-      <h4 class="card-title">{{recipe.name}}</h4>
+      <h4 class="card-title"><a [routerLink]="['/recipes/view', recipe.recipeId]">{{recipe.name}}</a></h4>
       <img src={{recipe.attachmentUrl}} class="img-fluid" alt="image">
     <div class="row" style="margin-top: 0.8rem;">
       <div class="col-xs-6 col-md-8">

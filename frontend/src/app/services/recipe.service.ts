@@ -66,6 +66,21 @@ export class RecipeService {
 
   }
 
+  getRecipe(id: string):RecipeItem|undefined{
+
+     const obj= this.recipes.find(
+        recipe => {
+          console.log('recipeId is: '+recipe.recipeId+'/ id:'+id);
+          if (recipe.recipeId===id){
+          return recipe.recipeId;
+          }
+          else return undefined;
+        });
+        console.log('object is '+obj?.name);
+        return obj;
+
+  }
+
   getUploadUrl(id:number):Observable<UrlResponse>{
     const header = {
       headers: new HttpHeaders()

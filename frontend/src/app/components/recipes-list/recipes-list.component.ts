@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { RecipeItem } from 'src/app/models/recipeItem';
 import { RecipeService } from 'src/app/services/recipe.service';
-import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-recipes-list',
@@ -53,6 +52,10 @@ this.router.navigate(['recipes', 'new']);
 
   onDeleteRecipe(id: string){
     this.recipeService.deleteRecipe(id);
+  }
+
+  onSingleRecipe(id:String){
+    this.router.navigate(['/recipes', 'view', id]);
   }
 
   ngOnDestroy(): void {
