@@ -18,6 +18,12 @@ export async function getRecipesForUser(userId: string): Promise<RecipeItem[]> {
     return await recipesAccess.getAllRecipes(userId)
 }
 
+export async function getPublicRecipes(userId: string): Promise<RecipeItem[]> {
+  logger.info(`Getting recipes shared by users`)
+  return await recipesAccess.getPublicRecipes(userId);
+}
+
+
 export async function getRecipe(userId: string, recipeId: string): Promise<RecipeItem> {
     return await recipesAccess.getRecipe(userId, recipeId)
 }
@@ -31,7 +37,7 @@ export async function createRecipe(createRecipeRequest: CreateRecipeRequest, use
         category: createRecipeRequest.category,
         ingredients: createRecipeRequest.ingredients,
         preparation: createRecipeRequest.preparation,
-        private: true,
+        private: 1,
         attachmentUrl: await attachmentUtils.getUrl(recipeId)
       })
     }

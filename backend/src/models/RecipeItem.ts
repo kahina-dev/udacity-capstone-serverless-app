@@ -7,6 +7,6 @@ export interface RecipeItem {
   preparation: string
   prepationTime?: string
   cookingTime?: string
-  private: boolean
+  private: number
   attachmentUrl?: string
 }

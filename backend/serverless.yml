@@ -1,6 +1,6 @@
 org: kahinadev
-app: serverless-cookpad-app
-service: serverless-cookpad-app
+app: cookpad-serverless-app
+service: cookpad-serverless-app
 
 plugins:
   - serverless-webpack
@@ -23,6 +23,7 @@ provider:
   environment:
     RECIPES_TABLE: Recipes-${self:provider.stage}
     RECIPE_CATEGORY_INDEX: CategoryIndex
+    RECIPE_PUBLIC_INDEX: PublicIndex
     ATTACHMENT_S3_BUCKET: serverless-taramak-recipe-images-${self:provider.stage}
     SIGNED_URL_EXPIRATION: 300
     JWKS_URL: https://kahina-dev.us.auth0.com/.well-known/jwks.json
@@ -71,21 +72,23 @@ functions:
           - dynamodb:Query
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.RECIPES_TABLE}/index/${self:provider.environment.RECIPE_CATEGORY_INDEX}
 
-  GetRecipe:
-    handler: src/lambda/http/getRecipe.handler
+  GetPublishedRecipes:
+    handler: src/lambda/http/getPublicRecipes.handler
     events:
       - http:
           method: get
-          path: recipes/{recipeId}
+          path: recipes/public
           cors: true
-          authorizer: Auth
     iamRoleStatementsInherit: true
     iamRoleStatements:
       - Effect: Allow
         Action:
           - dynamodb:Query
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.RECIPES_TABLE}
-      
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.RECIPES_TABLE}/index/${self:provider.environment.RECIPE_PUBLIC_INDEX}
   
   CreateRecipe:
     handler: src/lambda/http/createRecipe.handler
@@ -129,7 +132,7 @@ functions:
     handler: src/lambda/http/publicRecipe.handler
     events:
       - http:
-          method: post
+          method: patch
           path: recipes/{recipeId}/public
           cors: true
           authorizer: Auth
@@ -137,7 +140,8 @@ functions:
     iamRoleStatements:
       - Effect: Allow
         Action:
-          - dynamodb:Query
+          - dynamodb:GetItem
+          - dynamodb:UpdateItem
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.RECIPES_TABLE}
 
   DeleteRecipe:
@@ -200,6 +204,8 @@ resources:
             AttributeType: S
           - AttributeName: category
             AttributeType: S
+          - AttributeName: private
+            AttributeType: N
         KeySchema:
           - AttributeName: userId
             KeyType: HASH
@@ -207,12 +213,21 @@ resources:
             KeyType: RANGE
         BillingMode: PAY_PER_REQUEST
         TableName: ${self:provider.environment.RECIPES_TABLE}
-        GlobalSecondaryIndexes:
+        LocalSecondaryIndexes:
           - IndexName: ${self:provider.environment.RECIPE_CATEGORY_INDEX}
             KeySchema:
               - AttributeName: userId
                 KeyType: HASH
               - AttributeName: category
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+        GlobalSecondaryIndexes:
+          - IndexName: ${self:provider.environment.RECIPE_PUBLIC_INDEX}
+            KeySchema:
+              - AttributeName: recipeId
+                KeyType: HASH
+              - AttributeName: private
                 KeyType: RANGE
             Projection:
               ProjectionType: ALL

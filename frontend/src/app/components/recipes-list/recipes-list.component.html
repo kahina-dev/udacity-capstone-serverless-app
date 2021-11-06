@@ -32,7 +32,9 @@
         <span class="fas fa-trash" aria-hidden="true"></span>
       </button>
 
-      <button type="button" class="btn btn-outline-primary" alt="Share">
+      <button type="button" [ngClass]="{'btn':true,
+                                        'btn-outline-primary': recipe.private===1,
+                                        'btn-outline-dark': recipe.private===0}" alt="Share" (click)="onShareRecipe(recipe.recipeId)">
         <span class="fas fa-share" aria-hidden="true"></span>
       </button>
     </div>

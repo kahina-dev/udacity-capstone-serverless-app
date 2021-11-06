@@ -8,7 +8,7 @@ import { RecipeUpdate } from '../models/RecipeUpdate';
 const AWSXRay = require('aws-xray-sdk');
 const XAWS = AWSXRay.captureAWS(AWS)
 
-const logger = createLogger('TodosAccess')
+const logger = createLogger('RecipesAccess')
 
 // TODO: Implement the dataLayer logic
 export class RecipesAccess{
@@ -16,7 +16,8 @@ export class RecipesAccess{
     constructor(
         private readonly docClient: DocumentClient = new XAWS.DynamoDB.DocumentClient(),
         private readonly recipesTable = process.env.RECIPES_TABLE,
-        private readonly recipeIndex=process.env.RECIPES_CATEGORY_INDEX) { }
+        private readonly recipeIndex=process.env.RECIPES_CATEGORY_INDEX,
+        private readonly statusIndex=process.env.RECIPES_PUBLIC_INDEX) { }
 
     async getAllRecipes(userId: string): Promise<RecipeItem[]> {
         logger.info(`Getting all recipes for user ${userId}`)
@@ -31,6 +32,27 @@ export class RecipesAccess{
           ScanIndexForward: true
         }).promise()
     
+        const items = result.Items
+        return items as RecipeItem[]
+      }
+
+      async getPublicRecipes(userId: string): Promise<RecipeItem[]> {
+        logger.info(`Getting all recipes shared by users`)
+    
+        const result = await this.docClient.query({
+          TableName: this.recipesTable,
+          IndexName : this.statusIndex,
+          KeyConditionExpression: 'userId <> :userId and #p = :p',
+          ExpressionAttributeValues: {
+          ':userId': userId,
+          ':p': 0
+           },
+           ExpressionAttributeNames: {
+            "#p": "private"
+           },
+          ScanIndexForward: false
+        }).promise()
+
         const items = result.Items
         return items as RecipeItem[]
       }
@@ -91,7 +113,7 @@ export class RecipesAccess{
                   },
                   UpdateExpression: "set #p=:p",
                   ExpressionAttributeValues:{
-                      ":p":false
+                      ":p":0
                   },
                   ExpressionAttributeNames: {
                   "#p": "private"

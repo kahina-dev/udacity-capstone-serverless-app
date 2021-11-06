@@ -26,22 +26,22 @@ this application will allow creating/updating/fetching and deleting recipe items
 - name: string (name of a recipe)
 - ingredients: string (ingredients needed to prepare a recipe)
 - preparation: string (preparation and cooking steps)
-- prepationTime: string
-- cookingTime: string
+- prepationTime: string (Time in minutes needed to prepare a recipe)
+- cookingTime: string (cooking time in minites)
 - attachmentUrl: string (optional) - (a URL pointing to an image attached to a recipe item)
 - category: string ( a category class sach as : Bread, Cakes...etc)
-- private : boolean ( true if note shared and false if shared with other users)
+- private : number ( 1 if not shared and 0 if shared with other users)
 Each recipe item is attached to a userId
 
 ### Functions implemented:
-1 - Auth:
-2 - createRecipe
-3 - getRecipes
-4 - updateRecipe:
-5 - deleteRecipe:
-6 - GenerateUploadUrl:
-7 - publishRecipe:
-8 - getPublishedRecipes:
+1. Auth: this function implements a custom authorizer for API Gateway which is added to all other functions.
+2. createRecipe: Creates a new recipe for the current user and returns a new recipe item
+3. getRecipes: this function returns all recipes created by the current user
+4. updateRecipe: Updates a recipe item created by the current user
+5. deleteRecipe: Deletes a recipe item created by the current user
+6. GenerateUploadUrl: returns a pre-signed URL that can be used to upload an attachment file for a recipe item.
+7. publishRecipe: allows to share a recipe by updating the **private** proerty to 0
+8. getPublishedRecipes: this function returns all recipes shared by all users having property **private** equal to 0
 
 ### Run Frontend app:
 
@@ -52,13 +52,14 @@ npm start
 ```
 
 ### Usage:
-- To diplay all user recipe click on -My recipes- menu once authenticated
-- to create a new recipe click on -create- button
-- For each recipe item:  
-    - you can upload a file by clicking on pencil icon
-    - update a recipe by clicking on edit icon 
-    - delete a recipe by clicking on delete icon
-    - show recipe details by clicking on recipe name (Title)
+- To diplay all user recipe click on **My recipes** menu once authenticated
+- To create a new recipe click on **new recipe** button
+- For each recipe item, you can: 
+  - Upload a file (image) by clicking on *pencil* icon
+  - Update a recipe by clicking on *edit* icon 
+  - Delete a recipe by clicking on *delete* icon
+  - Show recipe details by clicking on recipe name (Title)
+  - Share a recipe by clicking on *share* icon
                          
 
 

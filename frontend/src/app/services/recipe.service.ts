@@ -25,7 +25,7 @@ export interface RecipeItemResponse {
 })
 export class RecipeService {
 
-  apiURL = 'https://74jp05bxbe.execute-api.us-east-1.amazonaws.com/dev';
+  apiURL = 'https://3kcoph2eel.execute-api.us-east-1.amazonaws.com/dev';
 
   recipes: RecipeItem[] = [];
   recipesSubject = new BehaviorSubject<RecipeItem[]>([]); // new Subject<RecipeItem[]>();
@@ -142,6 +142,25 @@ export class RecipeService {
         this.recipes[index].preparationTime=updateRecipe.preparationTime;
         this.recipes[index].cookingTime=updateRecipe.cookingTime;
         console.log('Recipe updated !');
+        this.emitRecipes();
+      },
+      (error) => {
+        console.error(
+          `Backend returned code ${error.status}, body was: `, error.error);
+      }
+    );
+  }
+
+  shareRecipe(id: string){
+    const header = {
+      headers: new HttpHeaders()
+        .set('Authorization',  `Bearer ${this.authService.idToken}`)
+    }
+    this.httpClient.patch(this.apiURL+"/recipes/"+id+"/public", {}, header).subscribe(
+      () => {
+        const index=this.recipes.findIndex(recipe=>recipe.recipeId===id);
+        this.recipes[index].private=0;
+        console.log('Recipe shared!');
         this.emitRecipes();
       },
       (error) => {

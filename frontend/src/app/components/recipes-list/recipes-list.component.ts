@@ -58,6 +58,10 @@ this.router.navigate(['recipes', 'new']);
     this.router.navigate(['/recipes', 'view', id]);
   }
 
+  onShareRecipe(id: string){
+    this.recipeService.shareRecipe(id);
+  }
+
   ngOnDestroy(): void {
 
   this.recipesSubscription.unsubscribe();
