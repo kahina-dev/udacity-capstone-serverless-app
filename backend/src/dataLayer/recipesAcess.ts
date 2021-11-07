@@ -16,8 +16,8 @@ export class RecipesAccess{
     constructor(
         private readonly docClient: DocumentClient = new XAWS.DynamoDB.DocumentClient(),
         private readonly recipesTable = process.env.RECIPES_TABLE,
-        private readonly recipeIndex=process.env.RECIPES_CATEGORY_INDEX,
-        private readonly statusIndex=process.env.RECIPES_PUBLIC_INDEX) { }
+        private readonly recipeIndex=process.env.RECIPE_CATEGORY_INDEX,
+        private readonly statusIndex=process.env.RECIPE_PUBLIC_INDEX) { }
 
     async getAllRecipes(userId: string): Promise<RecipeItem[]> {
         logger.info(`Getting all recipes for user ${userId}`)
@@ -36,21 +36,20 @@ export class RecipesAccess{
         return items as RecipeItem[]
       }
 
-      async getPublicRecipes(userId: string): Promise<RecipeItem[]> {
+      async getPublicRecipes(): Promise<RecipeItem[]> {
         logger.info(`Getting all recipes shared by users`)
     
         const result = await this.docClient.query({
           TableName: this.recipesTable,
           IndexName : this.statusIndex,
-          KeyConditionExpression: 'userId <> :userId and #p = :p',
+          KeyConditionExpression: '#p = :p',
           ExpressionAttributeValues: {
-          ':userId': userId,
           ':p': 0
            },
            ExpressionAttributeNames: {
             "#p": "private"
            },
-          ScanIndexForward: false
+           ScanIndexForward: false
         }).promise()
 
         const items = result.Items

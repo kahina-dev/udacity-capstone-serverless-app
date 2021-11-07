@@ -18,9 +18,9 @@ export async function getRecipesForUser(userId: string): Promise<RecipeItem[]> {
     return await recipesAccess.getAllRecipes(userId)
 }
 
-export async function getPublicRecipes(userId: string): Promise<RecipeItem[]> {
+export async function getPublicRecipes(): Promise<RecipeItem[]> {
   logger.info(`Getting recipes shared by users`)
-  return await recipesAccess.getPublicRecipes(userId);
+  return await recipesAccess.getPublicRecipes();
 }
 
 

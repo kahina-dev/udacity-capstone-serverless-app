@@ -1,19 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable, SystemJsNgModuleLoader } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { CreateRecipeRequest } from '../models/createRecipeRequest';
 import { RecipeItem } from '../models/recipeItem';
 import { UrlResponse } from '../models/urlResponse';
 import { UpdateRecipeRequest } from '../models/updateRecipeRequest';
-import { ReplaySubject } from 'rxjs-compat';
 import { AuthService } from './auth.service';
 import { BehaviorSubject, defer } from 'rxjs';
-import { retry } from 'rxjs/operators';
-
-export interface RecipesListResponse {
-  items: RecipeItem[];
-}
+import { environment as env} from '../../environments/environment';
+import { RecipesListResponse } from '../models/recipesListResponse';
 
 
 export interface RecipeItemResponse {
@@ -25,19 +20,17 @@ export interface RecipeItemResponse {
 })
 export class RecipeService {
 
-  apiURL = 'https://3kcoph2eel.execute-api.us-east-1.amazonaws.com/dev';
+  apiURL = env.apiUrl;
 
   recipes: RecipeItem[] = [];
-  recipesSubject = new BehaviorSubject<RecipeItem[]>([]); // new Subject<RecipeItem[]>();
+  recipesSubject = new BehaviorSubject<RecipeItem[]>([]);
 
   constructor(private httpClient: HttpClient, private authService: AuthService) {
-    console.log("service constructor")
-    this.getRecipes();
+      this.getRecipes();
   }
 
   emitRecipes() {
     this.recipesSubject.next(this.recipes);
-    console.log("++++"+this.recipes);
   }
 
   addRecipeToArray(recipeItem: RecipeItem){
@@ -47,7 +40,7 @@ export class RecipeService {
 
 
   getRecipes(){
-    console.log("++++ Getting recipes");
+    console.log("Getting recipes");
     const header = {
       headers: new HttpHeaders()
         .set('Authorization',  `Bearer ${this.authService.idToken}`)
@@ -70,7 +63,6 @@ export class RecipeService {
 
      const obj= this.recipes.find(
         recipe => {
-          console.log('recipeId is: '+recipe.recipeId+'/ id:'+id);
           if (recipe.recipeId===id){
           return recipe.recipeId;
           }
@@ -169,4 +161,5 @@ export class RecipeService {
       }
     );
   }
+
 }

@@ -225,10 +225,8 @@ resources:
         GlobalSecondaryIndexes:
           - IndexName: ${self:provider.environment.RECIPE_PUBLIC_INDEX}
             KeySchema:
-              - AttributeName: recipeId
-                KeyType: HASH
               - AttributeName: private
-                KeyType: RANGE
+                KeyType: HASH
             Projection:
               ProjectionType: ALL
 

@@ -18,7 +18,6 @@ export class AuthService {
 
 
   constructor(@Inject(DOCUMENT) private doc: Document,  private router: Router) {
-    console.log("Calling auth service");
     this.authOptions = {
       domain: env.domain,
       clientID: env.clientId
@@ -39,7 +38,6 @@ export class AuthService {
   public parseAccessToken() {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
-        console.log('Setting token')
         this.setSession(authResult);
         this.getUser(authResult.accessToken);
       } else if (err) {
@@ -49,12 +47,10 @@ export class AuthService {
   }
 
   public getUser(accessToken: string){
-    console.log('Setting user info for accessToken '+accessToken);
     if (accessToken){
     this.auth0.client.userInfo(accessToken, (err, user)=>{
    if (user){
      this.user=user.name;
-     console.log("user is"+user.user_id);
    }else if (err) {
     console.log(err);
    }
@@ -69,7 +65,6 @@ export class AuthService {
     this.idToken = authResult.idToken;
     this.user=authResult.name;
     localStorage.setItem('id_token', authResult.idToken);
-    console.log("Token is "+authResult.idToken);
     this.expiresAt = expiresAt;
   }
 
@@ -86,12 +81,10 @@ export class AuthService {
   }
 
   logout() {
-    // Remove tokens and expiry time
     this.accessToken = null;
     this.idToken = null;
     this.expiresAt = 0;
 
-    // Remove isLoggedIn flag from localStorage
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('id_token');
 

@@ -1,4 +1,27 @@
 <div style="margin-top:5rem">
   <h2 class="text-primary" style="margin-top:2rem">Welcome to COOKPAD serverless app</h2>
+
   <h5 style="margin-top:5rem">Shared recipes: </h5>
+
+<div class="row">
+  <div class="col-xs-12 col-md-4" *ngFor="let recipe of recipes; let i = index">
+
+<div class="card border-primary mb-3" style="max-width: 20rem;" >
+  <div class="card-header">Recipe n° {{i+1}}</div>
+  <div class="card-body">
+      <h4 class="card-title"><a [routerLink]="['/recipes/view', recipe.recipeId, 'public']">{{recipe.name}}</a></h4>
+      <img src={{recipe.attachmentUrl}} class="img-fluid" alt="image">
+    <div class="row" style="margin-top: 0.8rem;">
+      <div class="col-xs-6 col-md-8">
+        <p class="card-subtitle mb-2 text-muted" style="font-size:0.9rem;">Preparation time: {{recipe.preparationTime}}</p>
+        <p class="card-subtitle mb-2 text-muted" style="font-size:0.9rem;">Cooking time: {{recipe.cookingTime}}</p>
+        <p class="card-subtitle mb-2 text-dark">Category: {{recipe.category}}</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
 </div>

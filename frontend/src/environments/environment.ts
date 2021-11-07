@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   domain: "kahina-dev.us.auth0.com",
-  clientId: "cvHc9XPQS4guWe09NGy6FzrC7h17keaU"
+  clientId: "cvHc9XPQS4guWe09NGy6FzrC7h17keaU",
+  apiUrl: "https://3g5gbo5fc3.execute-api.us-east-1.amazonaws.com/dev"
 };
 
 /*

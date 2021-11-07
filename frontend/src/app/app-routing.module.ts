@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'recipes/public', component: PublicListComponent },
   { path: 'recipes/new', canActivate: [AuthGuardService], component: NewRecipeComponent },
   { path: 'recipes/:id/image', canActivate: [AuthGuardService], component: NewImageComponent },
-  { path: 'recipes/view/:id', canActivate: [AuthGuardService], component: SingleRecipeComponent },
+  { path: 'recipes/view/:id/:status', component: SingleRecipeComponent },
   { path: 'recipes/update/:id', canActivate: [AuthGuardService], component: UpdateRecipeComponent },
   { path: '', redirectTo: 'recipes', pathMatch: 'full' },
   { path: '**', redirectTo: 'recipes' }
