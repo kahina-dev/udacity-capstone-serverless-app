@@ -1,0 +1,271 @@
+{
+	"info": {
+		"_postman_id": "d080cece-beb9-4b3d-b1c9-abcb0966816a",
+		"name": "Udacity Capstone Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Recipes",
+			"item": [
+				{
+					"name": "Get all recipes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{api}}.execute-api.us-east-1.amazonaws.com/dev/recipes",
+							"protocol": "https",
+							"host": [
+								"{{api}}",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"recipes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create recipe",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Tamina\",\n\t\"category\": \"desert\",\n    \"ingredients\": \"semolina, honey, butter\",\n    \"preparation\": \"Mix all ingredients\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{api}}.execute-api.us-east-1.amazonaws.com/dev/recipes",
+							"protocol": "https",
+							"host": [
+								"{{api}}",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"recipes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get attachement url",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{api}}.execute-api.us-east-1.amazonaws.com/dev/todos/72aee155-483a-439d-9299-23f1e6f42e21/attachment",
+							"protocol": "https",
+							"host": [
+								"{{api}}",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"todos",
+								"72aee155-483a-439d-9299-23f1e6f42e21",
+								"attachment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete recipe",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{api}}.execute-api.us-east-1.amazonaws.com/dev/recipes/18de2dc3-040a-4980-8bfd-37df78024646",
+							"protocol": "https",
+							"host": [
+								"{{api}}",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"recipes",
+								"18de2dc3-040a-4980-8bfd-37df78024646"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Share recipe",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{api}}.execute-api.us-east-1.amazonaws.com/dev/recipes/b2b37ea8-5ae4-469a-af42-7a93338586e4/public",
+							"protocol": "https",
+							"host": [
+								"{{api}}",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"recipes",
+								"b2b37ea8-5ae4-469a-af42-7a93338586e4",
+								"public"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update recipe",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"preparationTime\": \"Change the world\",\n\t\"cookingTime\": \"2019-12-11\"\n}"
+						},
+						"url": {
+							"raw": "https://{{api}}.execute-api.us-east-1.amazonaws.com/dev/recipes/eb888d14-ef28-4ef1-83f6-a6cff965c8da",
+							"protocol": "https",
+							"host": [
+								"{{api}}",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"recipes",
+								"eb888d14-ef28-4ef1-83f6-a6cff965c8da"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all shared recipes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{api}}.execute-api.us-east-1.amazonaws.com/dev/recipes/public",
+							"protocol": "https",
+							"host": [
+								"{{api}}",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"recipes",
+								"public"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "apiId",
+			"value": "qyksxj79ld"
+		},
+		{
+			"key": "authToken",
+			"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InFybXlmNWVFVDhaWXAtMFF1R1ZzUiJ9.eyJpc3MiOiJodHRwczovL2thaGluYS1kZXYudXMuYXV0aDAuY29tLyIsInN1YiI6Imdvb2dsZS1vYXV0aDJ8MTEzMDQwMDMxOTg3NzY2OTA5MTMzIiwiYXVkIjoiY3ZIYzlYUFFTNGd1V2UwOU5HeTZGenJDN2gxN2tlYVUiLCJpYXQiOjE2MzYyNzk5NjEsImV4cCI6MTYzNjMxNTk2MSwiYXRfaGFzaCI6InoyaTRQLUZVWVBxMm5fTzk3dFpwNXciLCJub25jZSI6ImltMVQ0bjJhOG1rZFZNbDhLdURpNnNQdHJJdXUzZWlQIn0.nO1_7imUuvtPV_nJnMY0DuzLlDrGSi02sWI3BT3hSq1ig13I1dEPfzGaiueGCl8q-BA6AjZ_c8EkT0WJsOnRP3yT2Ifr81re5vxAhmrngVRpD5Ckr1ae1ys3BDPQHm6Erm27Nqsa8ZYIYsgVhuiPSP6WUseFajv7Zub1PMWyQ-nzkYFhzBeWdf-wyDC-SCM3NNLUwAxnliOF5Gk96SZ-mAgZTG12S__7clmELPZCERlVX8lpHfAykzvt0621ZB-0TvyzMY-loW51D2ogvYqzOk4VPywr7Ynev5ndtpFv_TyFSVtwu0141cYdlVjh5DGoVHNYTvTP-V8g0JRQs98vLw"
+		},
+		{
+			"key": "api",
+			"value": "3g5gbo5fc3"
+		}
+	]
+}
